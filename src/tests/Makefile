@@ -27,22 +27,22 @@ all: $(TARGET)
 $(TARGET): $(OBJECTS)
 	@$(MAKE) -C $(SOURCEDIR) $(PROGRAM_TARGET)
 	@$(CC) $(CFLAGS) $(foreach object,$^,$(BUILDDIR)/$(notdir $(object))) -o $(TARGETDIR)/$@ $(LDFLAGS) 
-	@echo "running tests"
+	@echo "Running tests"
 	@$(RUN_FLAGS) ./$(TARGETDIR)/$@
 
 $(TARGETDBG): CFLAGS += -fsanitize=address -g
 $(TARGETDBG): $(OBJECTS)
 	@$(MAKE) -C $(SOURCEDIR) dbg
 	@$(CC) $(CFLAGS) $(foreach object,$^,$(BUILDDIR)/$(notdir $(object))) -o $(TARGETDIR)/$@ $(LDFLAGS) 
-	@echo "running tests"
+	@echo "Running tests"
 	@$(RUN_FLAGS) ./$(TARGETDIR)/$@
 
 %.o: %.c
-	$(CC) -I$(SOURCEDIR) $(CFLAGS) -c $< -o $(foreach object,$@,$(BUILDDIR)/$(notdir $(object)))
+	@$(CC) -I$(SOURCEDIR) $(CFLAGS) -c $< -o $(foreach object,$@,$(BUILDDIR)/$(notdir $(object)))
 
 rebuild: clean all
 clean:
-	@rm -rf $(BUILDDIR)/* $(TARGETDIR)/$(TARGET)
+	@rm -rf $(BUILDDIR)/* $(TARGETDIR)/$(TARGET) $(TARGETDIR)/$(TARGETDBG)
 	@rm -rf $(GCOVDIR)
 valgrind: all
 	valgrind --tool=memcheck --leak-check=yes  $(TARGETDIR)/$(TARGET)
