@@ -9,9 +9,11 @@ SOURCEDIR := ../decimal
 SUBDIRS := arithmetic comprasion convert_parse other
 BUILDDIR := ../build
 GCOVDIR := ../gcov
+LOGDIR := ../logs
+TARGETDIR := ..
+
 TARGET := test
 TARGETDBG := test_debug
-TARGETDIR := ..
 SOURCES := test.c
 LIB := ../s21_decimal.a
 PROGRAM_TARGET := all
@@ -44,6 +46,7 @@ rebuild: clean all
 clean:
 	@rm -rf $(BUILDDIR)/* $(TARGETDIR)/$(TARGET) $(TARGETDIR)/$(TARGETDBG)
 	@rm -rf $(GCOVDIR)
+	@find $(LOGDIR)/ -type f ! -name ".*" -delete
 valgrind: all
 	valgrind --tool=memcheck --leak-check=yes  $(TARGETDIR)/$(TARGET)
 	
