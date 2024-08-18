@@ -4,7 +4,7 @@ CFLAGS :=
 LDFLAGS := -lm
 
 SOURCEDIR := .
-SUBDIRS := arithmetic comparison convert_parse other common
+SUBDIRS := arithmetic comparison convert_parse other big_decimal
 BUILDDIR := ../build
 TARGET := s21_decimal.a
 TARGETDIR := ..

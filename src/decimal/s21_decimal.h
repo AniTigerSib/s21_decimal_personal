@@ -1,18 +1,28 @@
 #ifndef S21_DECIMAL_H
 #define S21_DECIMAL_H
 
-typedef struct {
-  int bits[4];
-} s21_decimal;
+#include <stdint.h>
 
 typedef struct {
-  int low_bits;
-  int middle_bits;
-  int high_bits;
-  int free_lower_word : 16; // must be zero
-  int exponent : 8;
-  int free_space : 7; // must be zero
-  int sign : 1;
+  unsigned int bits[4];
+} s21_decimal;
+
+typedef enum {
+  POSITIVE,
+  NEGATIVE
+} s21_decimal_sign;
+
+typedef union {
+  s21_decimal decimal;
+  struct {
+    int low_bits;
+    int middle_bits;
+    int high_bits;
+    int free_lower_word : 16; // must be zero
+    int degree : 8;
+    int free_space : 7; // must be zero
+    s21_decimal_sign sign : 1;
+  };
 } s21_decimal_binary;
 
 typedef enum {
