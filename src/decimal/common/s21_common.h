@@ -5,7 +5,7 @@
 #include <s21_decimal.h>
 
 typedef union {
-  uint64_t num : 36;
+  uint64_t num;
   struct {
 #if __BYTE_ORDER == __BIG_ENDIAN
     uint32_t high_bits;

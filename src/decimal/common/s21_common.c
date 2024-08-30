@@ -102,17 +102,17 @@ mantiss_comp_status mantiss_compare(s21_decimal_u a, s21_decimal_u b) {
   mantiss_comp_status status = EQUAL;
 
   int i = 2;
-  while (i >= 0 && ((s21_decimal_u)a).binary.bits[i] == 0 &&
-                   ((s21_decimal_u)b).binary.bits[i] == 0) {
+  while (i >= 0 && a.binary.bits[i] == 0 &&
+                   b.binary.bits[i] == 0) {
     i--;
   }
 
   if (i != -1) {
-    if (((s21_decimal_u)a).binary.bits[i] >
-        ((s21_decimal_u)b).binary.bits[i]) {
+    if (a.binary.bits[i] >
+        b.binary.bits[i]) {
       status = GREATER;
-    } else if (((s21_decimal_u)a).binary.bits[i] <
-               ((s21_decimal_u)b).binary.bits[i]) {
+    } else if (a.binary.bits[i] <
+               b.binary.bits[i]) {
       status = LESS;
     }
   }
