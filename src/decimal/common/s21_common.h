@@ -2,7 +2,7 @@
 #define S21_COMMON_H
 
 #include <stdbool.h>
-#include <s21_decimal.h>
+#include "../s21_decimal.h"
 
 typedef union {
   uint64_t num;

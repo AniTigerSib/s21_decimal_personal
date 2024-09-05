@@ -1,5 +1,4 @@
 #include "s21_common.h"
-#include "s21_decimal.h"
 
 /**
  * @brief Multiplies the mantissa of a decimal number by 10.
@@ -98,16 +97,33 @@ deg_eq_status degree_equalize(s21_decimal_u *a, s21_decimal_u *b) {
   return status;
 }
 
+/**
+ * @brief Compares the mantissas of two decimal numbers.
+ *
+ * This function compares the mantissas of the two input decimal numbers and returns
+ * the status of the comparison.
+ *
+ * @param a The first s21_decimal_u structure that represents the first decimal number.
+ * @param b The second s21_decimal_u structure that represents the second decimal number.
+ *
+ * @return The status of the comparison, which can be LESS, EQUAL, or GREATER.
+ */
 mantiss_comp_status mantiss_compare(s21_decimal_u a, s21_decimal_u b) {
+  /**
+   * @brief Status of the comparison.
+   */
   mantiss_comp_status status = EQUAL;
 
+  /**
+   * @brief Compares the mantissas of the two decimal numbers.
+   */
   int i = 2;
   while (i >= 0 && a.binary.bits[i] == 0 &&
                    b.binary.bits[i] == 0) {
     i--;
   }
 
-  if (i != -1) {
+  while (i != -1 && status == EQUAL) {
     if (a.binary.bits[i] >
         b.binary.bits[i]) {
       status = GREATER;
@@ -115,7 +131,11 @@ mantiss_comp_status mantiss_compare(s21_decimal_u a, s21_decimal_u b) {
                b.binary.bits[i]) {
       status = LESS;
     }
+    i--;
   }
 
+  /**
+   * @return The status of the comparison.
+   */
   return status;
 }
