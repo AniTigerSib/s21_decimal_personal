@@ -20,22 +20,17 @@ int s21_from_int_to_decimal(int src, s21_decimal *dst) {
   /**
    * @brief Status of the operation.
    */
-  common_status_e status = COMMON_OK;
-
-  /**
-   * @brief Temporary s21_decimal_u structure to store the decimal number.
-   */
-  s21_decimal_u *val = (s21_decimal_u *)dst;
-
-  /**
-   * @brief Checks if there is NULL pointer given as input parameter.
-   */
-  status = (dst == NULL) * ERR;
+  common_status_e status = (dst == NULL) * ERR;
 
   /**
    * @brief Converts the integer to a decimal number.
    */
   if (status == COMMON_OK) {
+    /**
+     * @brief Temporary s21_decimal_u structure to store the decimal number.
+     */
+    s21_decimal_u *val = (s21_decimal_u *)dst;
+
     val->binary.sign = (src < 0) * NEGATIVE;
 
     if (src == INT_MIN) {
