@@ -1,7 +1,6 @@
-#include <stdio.h>
 #include "../test.h"
+
 #include "check.h"
-#include "common/s21_common.h"
 #include "s21_decimal.h"
 
 START_TEST(test_zero__normal) {
