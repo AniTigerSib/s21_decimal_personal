@@ -2,28 +2,36 @@
 #define S21_DECIMAL_H
 
 #include <stdint.h>
+#include <endian.h>
 
 typedef struct {
-  unsigned int bits[4];
+  uint32_t bits[4];
 } s21_decimal;
 
 typedef enum {
-  POSITIVE,
+  POSITIVE = 0,
   NEGATIVE
 } s21_decimal_sign;
 
 typedef union {
   s21_decimal decimal;
   struct {
-    int low_bits;
-    int middle_bits;
-    int high_bits;
-    int free_lower_word : 16; // must be zero
-    int degree : 8;
-    int free_space : 7; // must be zero
-    s21_decimal_sign sign : 1;
-  };
-} s21_decimal_binary;
+#if __BYTE_ORDER == __BIG_ENDIAN
+  s21_decimal_sign sign : 1;
+  uint8_t free_space1 : 7; // must be zero
+  uint8_t degree : 8;
+  uint16_t free_space0 : 16; // must be zero
+  uint32_t bits[3];
+#endif
+#if __BYTE_ORDER == __LITTLE_ENDIAN
+  uint32_t bits[3];
+  uint16_t free_space0 : 16; // must be zero
+  uint8_t degree : 8;
+  uint8_t free_space1 : 7; // must be zero
+  s21_decimal_sign sign : 1;
+#endif
+  } binary;
+} s21_decimal_u;
 
 typedef enum {
   ARITHMETIC_OK = 0,

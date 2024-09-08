@@ -2,7 +2,7 @@ CC := gcc
 # ищет заголовочные файлы в этой директории 
 CFLAGS := -I../decimal
 # GCOVFLAGS := -fprofile-arcs -ftest-coverage
-GCOVFLAGS := --coverage
+GCOVFLAGS := --coverage # --gcov-ignore-errors=no_working_dir_found
 LDFLAGS := -lcheck -lsubunit -lrt -lm -lpthread
 
 SOURCEDIR := ../decimal
@@ -14,7 +14,7 @@ TARGETDIR := ..
 
 TARGET := test
 TARGETDBG := test_debug
-SOURCES := test.c
+SOURCES := main.c
 LIB := ../s21_decimal.a
 PROGRAM_TARGET := all
 RUN_FLAGS :=
@@ -57,6 +57,6 @@ gcov_report: all
 	@mkdir -p $(GCOVDIR)
 	@gcovr $(BUILDDIR) -r $(SOURCEDIR) --html --html-details -o $(GCOVDIR)/coverage.html
 
-LDFLAGS += -fsanitize=address -g -fno-omit-frame-pointer -fno-optimize-sibling-calls
-RUN_FLAGS += $(shell ASAN_SYMBOLIZER_PATH=$(dpkg -L llvm-$(llvm-config  --version | grep [0-9][0-9] -o ) | grep -e /usr/lib.*symbolizer))
+sanitaizer: LDFLAGS += -fsanitize=address -g -fno-omit-frame-pointer -fno-optimize-sibling-calls
+sanitaizer: RUN_FLAGS += $(shell ASAN_SYMBOLIZER_PATH=$(dpkg -L llvm-$(llvm-config  --version | grep [0-9][0-9] -o ) | grep -e /usr/lib.*symbolizer))
 sanitaizer: all

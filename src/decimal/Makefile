@@ -4,13 +4,12 @@ CFLAGS :=
 LDFLAGS := -lm
 
 SOURCEDIR := .
-SUBDIRS := arithmetic comparison convert_parse other big_decimal
+SUBDIRS := arithmetic comparison convert_parse other common #big_decimal
 BUILDDIR := ../build
 TARGET := s21_decimal.a
 TARGETDIR := ..
 SOURCES := 
 GCOVDIR := ../gcov
-GCOVFLAGS := --coverage
 # все .с файлы
 $(foreach dir,$(SUBDIRS),$(eval SOURCES += $(wildcard $(dir)/*.c)))
 #все .o файлы
